@@ -35,9 +35,9 @@ public class NumbersActivity extends AppCompatActivity {
         for (String w: words) {
             wordsList.add(new Word(w,"miwok"));
         }
-        ArrayAdapter<Word> itemsAdapter = new ArrayAdapter<Word>(this, R.layout.list_item,wordsList);
+        WordAdapter itemsAdapter = new WordAdapter(this, R.layout.list_item,wordsList);
         ListView listView = (ListView) findViewById(R.id.list);
-
+//
         listView.setAdapter(itemsAdapter);
 
     }

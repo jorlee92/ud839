@@ -1,43 +1,22 @@
 package com.example.android.miwok;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
 /**
- * Created by Jordan on 5/19/2017.
+ * Created by Jordan on 5/20/2017.
  */
 
-public class WordAdapter extends ArrayAdapter {
-    /**
-     * Constructor
-     *
-     * @param context  The current context.
-     * @param resource The resource ID for a layout file containing a TextView to use when
-     */
-    public WordAdapter(@NonNull Context context, @LayoutRes int resource) {
-        super(context, resource);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context            The current context.
-     * @param resource           The resource ID for a layout file containing a layout to use when
-     *                           instantiating views.
-     * @param textViewResourceId The id of the TextView within the layout resource to be populated
-     */
-    public WordAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId) {
-        super(context, resource, textViewResourceId);
-    }
-
+public class WordAdapter extends ArrayAdapter<Word> {
     /**
      * Constructor
      *
@@ -46,46 +25,8 @@ public class WordAdapter extends ArrayAdapter {
      *                 instantiating views.
      * @param objects  The objects to represent in the ListView.
      */
-    public WordAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull Object[] objects) {
+    public WordAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Word> objects) {
         super(context, resource, objects);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context            The current context.
-     * @param resource           The resource ID for a layout file containing a layout to use when
-     *                           instantiating views.
-     * @param textViewResourceId The id of the TextView within the layout resource to be populated
-     * @param objects            The objects to represent in the ListView.
-     */
-    public WordAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull Object[] objects) {
-        super(context, resource, textViewResourceId, objects);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context  The current context.
-     * @param resource The resource ID for a layout file containing a TextView to use when
-     *                 instantiating views.
-     * @param objects  The objects to represent in the ListView.
-     */
-    public WordAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List objects) {
-        super(context, resource, objects);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param context            The current context.
-     * @param resource           The resource ID for a layout file containing a layout to use when
-     *                           instantiating views.
-     * @param textViewResourceId The id of the TextView within the layout resource to be populated
-     * @param objects            The objects to represent in the ListView.
-     */
-    public WordAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List objects) {
-        super(context, resource, textViewResourceId, objects);
     }
 
     /**
@@ -98,6 +39,16 @@ public class WordAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return super.getView(position, convertView, parent);
+        View listItemView = convertView;
+        if (listItemView == null){
+            listItemView = LayoutInflater.from(getContext()).inflate(
+                    R.layout.list_item, parent, false);
+        }
+        Word currentWord = getItem(position);
+        TextView miwokText = (TextView) listItemView.findViewById(R.id.miwok_text_view);
+        miwokText.setText(currentWord.getMiwokTranslation());
+        TextView defaultText = (TextView) listItemView.findViewById(R.id.default_text_view);
+        defaultText.setText(currentWord.getDefaultTranslation());
+        return listItemView;
     }
 }
